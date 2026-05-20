@@ -11,6 +11,7 @@ import DonorDashboard from './pages/DonorDashboard';
 import Checkout from './pages/Checkout';
 import Settings from './pages/Settings';
 import Donations from './pages/Donations';
+import AdminDashboard from './pages/AdminDashboard';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
             <Route path="donor" element={<DonorDashboard />} />
             <Route path="settings" element={<Settings />} />
             <Route path="donations" element={<Donations />} />
+            <Route path="admin" element={<AdminDashboard />} />
             <Route path="ngo-profile" element={<NGOProfile />} />
           </Route>
         </Routes>

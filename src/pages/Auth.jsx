@@ -10,9 +10,15 @@ export default function Auth() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
+  const getRedirect = (role) => {
+    if (role === 'DONOR') return '/dashboard/donor';
+    if (role === 'ADMIN') return '/dashboard/admin';
+    return '/dashboard';
+  };
+
   useEffect(() => {
     if (!authLoading && user) {
-      navigate(user.role === 'DONOR' ? '/dashboard/donor' : '/dashboard');
+      navigate(getRedirect(user.role));
     }
   }, [user, authLoading, navigate]);
 
@@ -43,14 +49,14 @@ export default function Auth() {
         }
 
         await register({ fullName, email, password, role, organizationName, missionStatement });
-        navigate(role === 'DONOR' ? '/dashboard/donor' : '/dashboard');
+        navigate(getRedirect(role));
       } else {
         // Login
         if (!email || !password) {
           throw new Error('Please enter your email and password.');
         }
         const data = await login({ email, password });
-        navigate(data.user.role === 'DONOR' ? '/dashboard/donor' : '/dashboard');
+        navigate(getRedirect(data.user.role));
       }
     } catch (err) {
       setError(err.message);

@@ -5,23 +5,37 @@ export default function DashboardLayout() {
   const location = useLocation();
   const { user } = useAuth();
   const isDonor = user?.role === 'DONOR';
+  const isAdmin = user?.role === 'ADMIN';
+  const searchParams = new URLSearchParams(location.search);
+  const activeAdminTab = searchParams.get('tab') || 'overview';
 
-  const linkStyle = (path) => ({
-    padding: '12px 16px',
-    background: location.pathname === path ? '#EFF6FF' : 'transparent',
-    color: location.pathname === path ? 'var(--primary)' : 'var(--text-muted)',
-    fontWeight: location.pathname === path ? 600 : 500,
-    borderRadius: 'var(--radius-sm)',
-    transition: 'background 0.2s',
-    display: 'block'
-  });
+  const linkStyle = (path, tab) => {
+    const isActive = tab
+      ? location.pathname === path && activeAdminTab === tab
+      : location.pathname === path && !searchParams.get('tab');
+    return {
+      padding: '12px 16px',
+      background: isActive ? '#EFF6FF' : 'transparent',
+      color: isActive ? 'var(--primary)' : 'var(--text-muted)',
+      fontWeight: isActive ? 600 : 500,
+      borderRadius: 'var(--radius-sm)',
+      transition: 'background 0.2s',
+      display: 'block'
+    };
+  };
 
   return (
     <div style={{ display: 'flex', minHeight: 'calc(100vh - 72px)' }}>
         {/* Sidebar */}
         <aside style={{ width: '250px', background: 'white', borderRight: '1px solid var(--border-light)', padding: '24px' }}>
             <nav style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                {isDonor ? (
+                {isAdmin ? (
+                  <>
+                    <Link to="/dashboard/admin" style={linkStyle('/dashboard/admin', null)}>📊 Overview</Link>
+                    <Link to="/dashboard/admin?tab=managers" style={linkStyle('/dashboard/admin', 'managers')}>🏢 NGO Managers</Link>
+                    <Link to="/dashboard/admin?tab=posts" style={linkStyle('/dashboard/admin', 'posts')}>📰 All Posts</Link>
+                  </>
+                ) : isDonor ? (
                   <>
                     <Link to="/dashboard/donor" style={linkStyle('/dashboard/donor')}>📰 Feed</Link>
                     <Link to="/dashboard/ngo-profile" style={linkStyle('/dashboard/ngo-profile')}>🏢 Explore NGOs</Link>
