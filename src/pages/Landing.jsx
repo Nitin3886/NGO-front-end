@@ -2,7 +2,8 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
+const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+const API_URL = isLocal ? 'http://localhost:5001/api' : (import.meta.env.VITE_API_URL || 'https://ngo-back-end.onrender.com/api');
 
 export default function Landing() {
   const navigate = useNavigate();
@@ -154,7 +155,7 @@ export default function Landing() {
             <div className="grid grid-cols-3">
               {ngos.map((ngo, idx) => {
                 const colors = [
-                  { bg: 'linear-gradient(135deg, #DBEAFE, #BFDBFE)', text: '#1E40AF', light: '#EFF6FF' },
+                  { bg: 'linear-gradient(135deg, #FFEDD5, #FED7AA)', text: '#9A3412', light: '#FFF7ED' },
                   { bg: 'linear-gradient(135deg, #DCFCE7, #BBF7D0)', text: '#166534', light: '#F0FDF4' },
                   { bg: 'linear-gradient(135deg, #FEF3C7, #FDE68A)', text: '#92400E', light: '#FFFBEB' },
                   { bg: 'linear-gradient(135deg, #EDE9FE, #DDD6FE)', text: '#5B21B6', light: '#F5F3FF' },
@@ -299,7 +300,7 @@ export default function Landing() {
                       />
                     </div>
                   ) : (
-                    <div style={{ width: '100%', height: '120px', background: 'linear-gradient(135deg, #DBEAFE 0%, #EDE9FE 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '3rem', flexShrink: 0 }}>
+                    <div style={{ width: '100%', height: '120px', background: 'linear-gradient(135deg, #FFEDD5 0%, #EDE9FE 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '3rem', flexShrink: 0 }}>
                       📋
                     </div>
                   )}
@@ -308,7 +309,7 @@ export default function Landing() {
                   <div style={{ padding: '20px', flex: 1, display: 'flex', flexDirection: 'column' }}>
                     {/* NGO Badge */}
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '14px' }}>
-                      <div style={{ width: '34px', height: '34px', borderRadius: '50%', background: 'linear-gradient(135deg, #DBEAFE, #BFDBFE)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: '0.8rem', color: '#1E40AF', flexShrink: 0 }}>
+                      <div style={{ width: '34px', height: '34px', borderRadius: '50%', background: 'linear-gradient(135deg, #FFEDD5, #FED7AA)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: '0.8rem', color: '#9A3412', flexShrink: 0 }}>
                         {post.ngoId?.organizationName?.charAt(0)?.toUpperCase() || 'N'}
                       </div>
                       <div style={{ minWidth: 0 }}>

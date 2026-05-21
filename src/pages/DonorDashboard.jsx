@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
+const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+const API_URL = isLocal ? 'http://localhost:5001/api' : (import.meta.env.VITE_API_URL || 'https://ngo-back-end.onrender.com/api');
 
 export default function DonorDashboard() {
   const { user, profile, token } = useAuth();
@@ -219,13 +220,13 @@ export default function DonorDashboard() {
                       
                       {/* Post Header */}
                       <div style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '16px 20px', borderBottom: '1px solid var(--border-light)' }}>
-                        <div style={{ width: '44px', height: '44px', borderRadius: '50%', background: 'linear-gradient(135deg, #DBEAFE, #BFDBFE)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: '1rem', color: '#1E40AF' }}>
+                        <div style={{ width: '44px', height: '44px', borderRadius: '50%', background: 'linear-gradient(135deg, #FFEDD5, #FED7AA)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: '1rem', color: '#9A3412' }}>
                           {post.ngoId?.organizationName?.charAt(0)?.toUpperCase() || 'N'}
                         </div>
                         <div style={{ flex: 1 }}>
                           <p style={{ fontWeight: 600, fontSize: '0.9rem', margin: 0 }}>
                             {post.ngoId?.organizationName || 'Unknown NGO'}
-                            {post.ngoId?.isVerified && <span style={{ marginLeft: '6px', color: '#2563EB', fontSize: '0.85rem' }} title="Verified">✓</span>}
+                            {post.ngoId?.isVerified && <span style={{ marginLeft: '6px', color: '#F97316', fontSize: '0.85rem' }} title="Verified">✓</span>}
                           </p>
                           <p style={{ color: 'var(--text-muted)', fontSize: '0.75rem', margin: 0 }}>
                             {post.authorId?.fullName} • {timeAgo(post.publishedAt)}
@@ -286,7 +287,7 @@ export default function DonorDashboard() {
                               <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                                 {(postComments[post._id] || []).map((c) => (
                                   <div key={c._id} style={{ display: 'flex', gap: '10px' }}>
-                                    <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: c.userId?.role === 'DONOR' ? '#DCFCE7' : '#DBEAFE', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.65rem', fontWeight: 700, color: c.userId?.role === 'DONOR' ? '#166534' : '#1E40AF', flexShrink: 0 }}>
+                                    <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: c.userId?.role === 'DONOR' ? '#DCFCE7' : '#FFEDD5', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.65rem', fontWeight: 700, color: c.userId?.role === 'DONOR' ? '#166534' : '#9A3412', flexShrink: 0 }}>
                                       {c.userId?.fullName?.charAt(0)?.toUpperCase()}
                                     </div>
                                     <div style={{ background: '#F8FAFC', padding: '8px 14px', borderRadius: '12px', flex: 1 }}>
@@ -358,10 +359,10 @@ export default function DonorDashboard() {
                               gap: '10px',
                               background: 'rgba(255, 255, 255, 0.8)'
                             }}
-                            onMouseEnter={(e) => e.target.style.background = '#EFF6FF'}
+                            onMouseEnter={(e) => e.target.style.background = '#FFF7ED'}
                             onMouseLeave={(e) => e.target.style.background = 'rgba(255, 255, 255, 0.8)'}
                           >
-                            <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: 'linear-gradient(135deg, #DBEAFE, #BFDBFE)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: '0.65rem', color: '#1E40AF' }}>
+                            <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: 'linear-gradient(135deg, #FFEDD5, #FED7AA)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: '0.65rem', color: '#9A3412' }}>
                               {ngo.organizationName.charAt(0).toUpperCase()}
                             </div>
                             <span>{ngo.organizationName}</span>
@@ -406,7 +407,7 @@ export default function DonorDashboard() {
                           <span style={{ color: 'var(--text-muted)', fontSize: '0.75rem' }}>{timeAgo(exp.createdAt)}</span>
                         </div>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-                          <span style={{ background: '#DBEAFE', color: '#1E40AF', padding: '2px 10px', borderRadius: '99px', fontSize: '0.7rem', fontWeight: 600 }}>{exp.ngoName}</span>
+                          <span style={{ background: '#FFEDD5', color: '#9A3412', padding: '2px 10px', borderRadius: '99px', fontSize: '0.7rem', fontWeight: 600 }}>{exp.ngoName}</span>
                           <span style={{ color: '#F59E0B', fontSize: '0.85rem', letterSpacing: '1px' }}>{stars(exp.rating)}</span>
                         </div>
                         <p style={{ color: 'var(--text-dark)', fontSize: '0.9rem', lineHeight: 1.5, margin: 0 }}>{exp.text}</p>
@@ -433,15 +434,26 @@ export default function DonorDashboard() {
               <div style={{ textAlign: 'center' }}>
                 <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '20px' }}>Scan the QR code or use the UPI ID below to make a direct donation.</p>
                 
-                {selectedDonateNgo.upiQrImage && (
+                {(selectedDonateNgo.upiQrImage || selectedDonateNgo.upiId) && (
                   <div style={{ background: '#F8FAFC', padding: '16px', borderRadius: '12px', border: '1px solid var(--border-light)', marginBottom: '20px', display: 'inline-block' }}>
                     <img 
-                      src={selectedDonateNgo.upiQrImage.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/) 
-                        ? `https://drive.google.com/thumbnail?id=${selectedDonateNgo.upiQrImage.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/)[1]}&sz=w800`
-                        : selectedDonateNgo.upiQrImage} 
+                      src={
+                        selectedDonateNgo.upiQrImage
+                          ? (selectedDonateNgo.upiQrImage.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/) 
+                              ? `https://drive.google.com/thumbnail?id=${selectedDonateNgo.upiQrImage.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/)[1]}&sz=w800`
+                              : selectedDonateNgo.upiQrImage)
+                          : `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(`upi://pay?pa=${selectedDonateNgo.upiId}&pn=${encodeURIComponent(selectedDonateNgo.organizationName)}`)}`
+                      } 
                       alt="UPI QR Code" 
                       style={{ width: '200px', height: '200px', objectFit: 'contain' }} 
-                      onError={(e) => { e.target.style.display = 'none'; e.target.parentElement.style.display = 'none'; }} 
+                      onError={(e) => { 
+                        if (selectedDonateNgo.upiId && !e.target.src.includes('qrserver.com')) {
+                          // Fallback to generating QR from UPI ID if the uploaded image fails to load
+                          e.target.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(`upi://pay?pa=${selectedDonateNgo.upiId}&pn=${encodeURIComponent(selectedDonateNgo.organizationName)}`)}`;
+                        } else {
+                          e.target.style.display = 'none'; e.target.parentElement.style.display = 'none'; 
+                        }
+                      }} 
                     />
                   </div>
                 )}

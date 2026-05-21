@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 
-const API = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
+const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+const API = isLocal ? 'http://localhost:5001/api' : (import.meta.env.VITE_API_URL || 'https://ngo-back-end.onrender.com/api');
 
 const MONTHLY = [
   { m:'Jun',v:18},{ m:'Jul',v:32},{ m:'Aug',v:25},{ m:'Sep',v:41},
@@ -10,7 +11,7 @@ const MONTHLY = [
   { m:'Feb',v:58},{ m:'Mar',v:72},{ m:'Apr',v:67},{ m:'May',v:84},
 ];
 const PROGRAMS = [
-  { label:'Education',  pct:42, color:'#2563EB' },
+  { label:'Education',  pct:42, color:'#F97316' },
   { label:'Healthcare', pct:28, color:'#22C55E' },
   { label:'Nutrition',  pct:16, color:'#F59E0B' },
   { label:'Shelter',    pct:10, color:'#8B5CF6' },
@@ -21,11 +22,11 @@ const DONATIONS = [
   { donor:'Priya M.',   amount:'₹2,500',  prog:'Healthcare', status:'Pending',    sc:'#F59E0B' },
   { donor:'Arjun K.',   amount:'₹10,000', prog:'Nutrition',  status:'Received',   sc:'#22C55E' },
   { donor:'Sneha R.',   amount:'₹1,200',  prog:'Shelter',    status:'Received',   sc:'#22C55E' },
-  { donor:'Rahul D.',   amount:'₹3,800',  prog:'Skill Dev.', status:'Processing', sc:'#2563EB' },
+  { donor:'Rahul D.',   amount:'₹3,800',  prog:'Skill Dev.', status:'Processing', sc:'#F97316' },
 ];
 const PENDING = [
   { name:'Kavya NGO',  type:'New',     tc:'#F59E0B' },
-  { name:'Hope Trust', type:'Update',  tc:'#2563EB' },
+  { name:'Hope Trust', type:'Update',  tc:'#F97316' },
   { name:'GreenEarth', type:'New',     tc:'#F59E0B' },
   { name:'Care India', type:'Verified',tc:'#22C55E' },
 ];
@@ -48,13 +49,13 @@ function BarChart({ data }) {
               fill={isLast ? 'url(#grad)' : 'rgba(37,99,235,0.15)'}
               style={{ transition: 'all 0.4s ease' }} />
             <text x={x+16} y={158} textAnchor="middle" fontSize="9" fill="#94A3B8">{d.m}</text>
-            {isLast && <text x={x+16} y={140-bh-6} textAnchor="middle" fontSize="10" fill="#2563EB" fontWeight="700">{d.v}</text>}
+            {isLast && <text x={x+16} y={140-bh-6} textAnchor="middle" fontSize="10" fill="#F97316" fontWeight="700">{d.v}</text>}
           </g>
         );
       })}
       <defs>
         <linearGradient id="grad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#2563EB" />
+          <stop offset="0%" stopColor="#F97316" />
           <stop offset="100%" stopColor="#60A5FA" />
         </linearGradient>
       </defs>
@@ -75,7 +76,7 @@ function StatCard({ icon, label, value, sub, subColor, delay }) {
       onMouseLeave={e=>{ e.currentTarget.style.transform='translateY(0)'; e.currentTarget.style.boxShadow='0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.03)'; }}
     >
       <div style={{ display:'flex', alignItems:'center', gap:'10px', marginBottom:'14px' }}>
-        <div style={{ width:'38px', height:'38px', borderRadius:'10px', background:'linear-gradient(135deg,#EFF6FF,#DBEAFE)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'1.1rem' }}>{icon}</div>
+        <div style={{ width:'38px', height:'38px', borderRadius:'10px', background:'linear-gradient(135deg,#FFF7ED,#FFEDD5)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'1.1rem' }}>{icon}</div>
         <p style={{ fontSize:'0.68rem', fontWeight:700, color:'#94A3B8', textTransform:'uppercase', letterSpacing:'0.08em', margin:0 }}>{label}</p>
       </div>
       <p style={{ fontSize:'2.4rem', fontWeight:800, color:'#0F172A', margin:0, lineHeight:1, fontFamily:"'Outfit',sans-serif" }}>{value}</p>
@@ -114,7 +115,7 @@ export default function AdminDashboard() {
   }, []);
 
   const today = new Date().toLocaleDateString('en-US',{ weekday:'long', day:'numeric', month:'long', year:'numeric' });
-  const COLORS = ['#2563EB','#22C55E','#F59E0B','#EF4444','#8B5CF6','#06B6D4'];
+  const COLORS = ['#F97316','#22C55E','#F59E0B','#EF4444','#8B5CF6','#06B6D4'];
 
   const tabBtn = (id, label) => (
     <button onClick={()=>setTab(id)} style={{
@@ -194,7 +195,7 @@ export default function AdminDashboard() {
           </div>
 
           {/* Live DB card */}
-          <div className="animate-fade-up" style={{ background:'linear-gradient(135deg,#1E40AF,#2563EB,#0EA5E9)', borderRadius:'20px', padding:'28px', color:'white', boxShadow:'0 8px 32px rgba(37,99,235,0.35)', animationDelay:'160ms' }}>
+          <div className="animate-fade-up" style={{ background:'linear-gradient(135deg,#9A3412,#F97316,#0EA5E9)', borderRadius:'20px', padding:'28px', color:'white', boxShadow:'0 8px 32px rgba(37,99,235,0.35)', animationDelay:'160ms' }}>
             <p style={{ fontSize:'0.72rem', fontWeight:700, opacity:0.7, textTransform:'uppercase', letterSpacing:'0.08em', marginBottom:'20px' }}>📡 Live Database Stats</p>
             <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'24px' }}>
               {[['🏢',loading?'…':ngoCount,'NGO Managers'],['📰',loading?'…':postCount,'Posts']].map(([ic,v,l]) => (
@@ -311,7 +312,7 @@ export default function AdminDashboard() {
                   onMouseLeave={e=>e.currentTarget.style.background='white'}>
                   <td style={{ padding:'16px 24px' }}>
                     <div style={{ display:'flex', alignItems:'center', gap:'10px' }}>
-                      <div style={{ width:'36px', height:'36px', borderRadius:'50%', background:'linear-gradient(135deg,#DBEAFE,#BFDBFE)', display:'flex', alignItems:'center', justifyContent:'center', fontWeight:700, fontSize:'0.8rem', color:'#1E40AF' }}>{d.donor.charAt(0)}</div>
+                      <div style={{ width:'36px', height:'36px', borderRadius:'50%', background:'linear-gradient(135deg,#FFEDD5,#FED7AA)', display:'flex', alignItems:'center', justifyContent:'center', fontWeight:700, fontSize:'0.8rem', color:'#9A3412' }}>{d.donor.charAt(0)}</div>
                       <span style={{ fontWeight:600, fontSize:'0.875rem' }}>{d.donor}</span>
                     </div>
                   </td>

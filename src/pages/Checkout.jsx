@@ -12,7 +12,7 @@ export default function Checkout() {
     <div className="container" style={{ minHeight: 'calc(100vh - 72px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '40px 0' }}>
       <div className="card" style={{ width: '100%', maxWidth: '500px', padding: '40px' }}>
           <div className="text-center mb-8">
-              <div style={{ width: '60px', height: '60px', background: '#DBEAFE', borderRadius: '50%', margin: '0 auto 12px' }}></div>
+              <div style={{ width: '60px', height: '60px', background: '#FFEDD5', borderRadius: '50%', margin: '0 auto 12px' }}></div>
               <h2 style={{ fontSize: '1.5rem' }}>Support Water for All</h2>
           </div>
           

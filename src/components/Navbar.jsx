@@ -43,7 +43,7 @@ export default function Navbar() {
                 style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }}
                 onClick={() => setIsEditModalOpen(true)}
               >
-                <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: user?.role === 'DONOR' ? '#DCFCE7' : '#DBEAFE', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: '0.85rem', color: user?.role === 'DONOR' ? '#166534' : '#1E40AF' }}>
+                <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: user?.role === 'DONOR' ? '#DCFCE7' : '#FFEDD5', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: '0.85rem', color: user?.role === 'DONOR' ? '#166534' : '#9A3412' }}>
                   {user?.fullName?.charAt(0)?.toUpperCase()}
                 </div>
                 <div style={{ lineHeight: 1.2 }}>

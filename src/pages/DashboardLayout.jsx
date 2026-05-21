@@ -15,7 +15,7 @@ export default function DashboardLayout() {
       : location.pathname === path && !searchParams.get('tab');
     return {
       padding: '12px 16px',
-      background: isActive ? '#EFF6FF' : 'transparent',
+      background: isActive ? '#FFF7ED' : 'transparent',
       color: isActive ? 'var(--primary)' : 'var(--text-muted)',
       fontWeight: isActive ? 600 : 500,
       borderRadius: 'var(--radius-sm)',

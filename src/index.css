@@ -2,9 +2,9 @@
 
 :root {
   /* Colors */
-  --primary: #2563EB;
-  --primary-glow: rgba(37, 99, 235, 0.4);
-  --secondary: #22C55E;
+  --primary: #F97316;
+  --primary-glow: rgba(249, 115, 22, 0.4);
+  --secondary: #EA580C;
   --bg-color: #F8FAFC;
   --text-dark: #0F172A;
   --text-muted: #64748B;
@@ -31,10 +31,10 @@
 body {
   font-family: 'Plus Jakarta Sans', sans-serif;
   background-color: var(--bg-color);
-  background: radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.05) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, rgba(34, 197, 94, 0.05) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(37, 99, 235, 0.05) 0px, transparent 50%),
-    radial-gradient(at 0% 100%, rgba(34, 197, 94, 0.05) 0px, transparent 50%);
+  background: radial-gradient(at 0% 0%, rgba(249, 115, 22, 0.05) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(234, 88, 12, 0.05) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(249, 115, 22, 0.05) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(234, 88, 12, 0.05) 0px, transparent 50%);
   color: var(--text-dark);
   line-height: 1.6;
   min-height: 100vh;
@@ -82,26 +82,26 @@ a:hover {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--primary) 0%, #1D4ED8 100%);
+  background: linear-gradient(135deg, var(--primary) 0%, #C2410C 100%);
   color: var(--white);
-  box-shadow: 0 4px 14px 0 rgba(37, 99, 235, 0.39);
+  box-shadow: 0 4px 14px 0 rgba(249, 115, 22, 0.39);
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+  box-shadow: 0 6px 20px rgba(249, 115, 22, 0.4);
   filter: brightness(1.1);
 }
 
 .btn-secondary {
-  background: linear-gradient(135deg, var(--secondary) 0%, #16A34A 100%);
+  background: linear-gradient(135deg, var(--secondary) 0%, #9A3412 100%);
   color: var(--white);
-  box-shadow: 0 4px 14px 0 rgba(34, 197, 94, 0.39);
+  box-shadow: 0 4px 14px 0 rgba(234, 88, 12, 0.39);
 }
 
 .btn-secondary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(34, 197, 94, 0.4);
+  box-shadow: 0 6px 20px rgba(234, 88, 12, 0.4);
   filter: brightness(1.1);
 }
 
@@ -136,7 +136,7 @@ a:hover {
 .card:hover {
   transform: translateY(-8px);
   box-shadow: var(--shadow-lg);
-  border-color: rgba(37, 99, 235, 0.15);
+  border-color: rgba(249, 115, 22, 0.15);
 }
 
 .glass {
@@ -213,7 +213,7 @@ a:hover {
 .form-input:focus {
   border-color: var(--primary);
   background: var(--white);
-  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
+  box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.15);
   transform: translateY(-1px);
 }
 
